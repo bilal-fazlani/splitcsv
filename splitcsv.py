@@ -43,17 +43,19 @@ def main(argv):
         print("input file does not exist")
         sys.exit(1)
 
+    csv_columns = get_column_length(input_file)
+    print(f"reading {input_file}")
+    print(f"total {csv_columns} column(s)")
+
     if split_pattern != '':
         sp = list(map(int, split_pattern.split(',')))
         sp_sum = sum(sp)
-        csv_columns = get_column_length(input_file)
         if sp_sum > csv_columns:
             print(f"split pattern contains more columns ({sp_sum}) than csv ({csv_columns})")
             sys.exit(1)
         split(input_file, output_dir, sp)
     else:
-        count = get_column_length(input_file)
-        files = math.ceil(count / int(batch_size))
+        files = math.ceil(csv_columns / int(batch_size))
         sp = [int(batch_size)] * files
         split(input_file, output_dir, sp)
 
@@ -84,7 +86,7 @@ def get_column_length(filepath):
 
 def split(filepath, target_dir, column_set):
     os.makedirs(os.path.dirname(target_dir + '/'), exist_ok=True)
-    print(f"writing to directory: {target_dir}")
+    print(f"writing to '{target_dir}' directory")
 
     for fIndex in range(len(column_set)):
         remove(data_file(fIndex, target_dir, filepath))
@@ -92,19 +94,22 @@ def split(filepath, target_dir, column_set):
     with open(filepath, 'r') as mainFile:
         reader = csv.reader(mainFile, delimiter=',')
         rows = 0
+        columns = {}
         for row in reader:
             read_columns = 0
             for i in range(len(column_set)):
                 f = open(data_file(i, target_dir, filepath), 'a')
                 w = csv.writer(f, delimiter=',')
-                w.writerow(row[read_columns:read_columns + column_set[i]])
+                row_subset = row[read_columns:read_columns + column_set[i]]
+                w.writerow(row_subset)
                 read_columns += column_set[i]
+                columns.update({i: len(row_subset)})
                 f.close()
             rows += 1
-            print(f"\rProgress: {rows} rows processed", end="")
+            print(f"\rprogress: {rows} rows processed", end="")
     print(f"\n\r{len(column_set)} file(s) created")
     for i in range(len(column_set)):
-        print("\t - " + data_file(i, target_dir, filepath))
+        print(f"\t - {data_file(i, target_dir, filepath)} [{columns[i]} column(s)]")
 
 
 if __name__ == '__main__':
