@@ -45,6 +45,11 @@ def main(argv):
 
     if split_pattern != '':
         sp = list(map(int, split_pattern.split(',')))
+        sp_sum = sum(sp)
+        csv_columns = get_column_length(input_file)
+        if sp_sum > csv_columns:
+            print(f"split pattern contains more columns ({sp_sum}) than csv ({csv_columns})")
+            sys.exit(1)
         split(input_file, output_dir, sp)
     else:
         count = get_column_length(input_file)
@@ -79,7 +84,6 @@ def get_column_length(filepath):
 
 def split(filepath, target_dir, column_set):
     os.makedirs(os.path.dirname(target_dir + '/'), exist_ok=True)
-
     print(f"writing to directory: {target_dir}")
 
     for fIndex in range(len(column_set)):
@@ -98,7 +102,9 @@ def split(filepath, target_dir, column_set):
                 f.close()
             rows += 1
             print(f"\rProgress: {rows} rows processed", end="")
-    print("\n\rDONE")
+    print(f"\n\r{len(column_set)} file(s) created")
+    for i in range(len(column_set)):
+        print("\t - " + data_file(i, target_dir, filepath))
 
 
 if __name__ == '__main__':
