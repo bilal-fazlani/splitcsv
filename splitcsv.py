@@ -4,15 +4,16 @@ import csv
 import getopt
 import os
 import sys
-
+import math
 
 def main(argv):
     input_file = ''
     output_dir = 'output'
     split_pattern = ''
+    batch_size = ''
 
     try:
-        opts, args = getopt.getopt(argv, "hi:o:p:", ["inputFile=", "outputDir=", "splitPattern="])
+        opts, args = getopt.getopt(argv, "hi:o:p:b:", ["inputFile=", "outputDir=", "splitPattern=", "batchSize="])
     except getopt.GetoptError:
         print_help(2)
     for opt, arg in opts:
@@ -24,21 +25,31 @@ def main(argv):
             output_dir = arg
         elif opt in ("-p", "--splitPattern"):
             split_pattern = arg
+        elif opt in ("-b", "--batchSize"):
+            batch_size = arg
 
     if input_file == '':
         print("please specify input file")
         print_help(2)
 
-    if split_pattern == '':
-        print("please specify split pattern")
+    if (split_pattern == '') & (batch_size == ''):
+        print("please specify split pattern or batch size")
         print_help(2)
 
-    sp = list(map(int, split_pattern.split(',')))
-    split(input_file, output_dir, sp)
+    if split_pattern != '':
+        sp = list(map(int, split_pattern.split(',')))
+        split(input_file, output_dir, sp)
+    else:
+        count = get_column_length(input_file)
+        files = math.ceil(count / int(batch_size))
+        sp = [int(batch_size)] * files
+        split(input_file, output_dir, sp)
 
 
 def print_help(exit_code=0):
-    print('splitcsv.py -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern>')
+    print('splitcsv.py -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
+          'OR\n'
+          'splitcsv.py -i <inputFile> -o <outputDir> (default: output/) -b <batchSize>')
     sys.exit(exit_code)
 
 
@@ -49,6 +60,12 @@ def remove(filename):
 
 def data_file(i, target_dir):
     return f'{target_dir}/data_{i + 1}.csv'
+
+
+def get_column_length(filepath):
+    with open(filepath, 'r') as mainFile:
+        reader = csv.reader(mainFile, delimiter=',')
+        return len(next(reader))
 
 
 def split(filepath, target_dir, column_set):
