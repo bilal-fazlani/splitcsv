@@ -8,7 +8,8 @@ import math
 import pathlib
 
 
-def main(argv):
+def main():
+    argv = sys.argv[1:]
     input_file = ''
     output_dir = 'output'
     split_pattern = ''
@@ -61,9 +62,9 @@ def main(argv):
 
 
 def print_help(exit_code=0):
-    print('splitcsv.py -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
+    print('splitcsv -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
           'OR\n'
-          'splitcsv.py -i <inputFile> -o <outputDir> (default: output/) -b <batchSize>')
+          'splitcsv -i <inputFile> -o <outputDir> (default: output/) -b <batchSize>')
     sys.exit(exit_code)
 
 
@@ -113,4 +114,4 @@ def split(filepath, target_dir, column_set):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main()

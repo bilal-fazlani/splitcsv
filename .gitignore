@@ -2,3 +2,6 @@
 output
 *.csv
 .DS_Store
+build
+dist
+splitcsv.egg-info
