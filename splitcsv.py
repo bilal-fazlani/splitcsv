@@ -78,6 +78,7 @@ def split(filepath, target_dir, column_set):
 
     with open(filepath, 'r') as mainFile:
         reader = csv.reader(mainFile, delimiter=',')
+        rows = 0
         for row in reader:
             read_columns = 0
             for i in range(len(column_set)):
@@ -86,6 +87,9 @@ def split(filepath, target_dir, column_set):
                 w.writerow(row[read_columns:read_columns + column_set[i]])
                 read_columns += column_set[i]
                 f.close()
+            rows += 1
+            print(f"\rProgress: {rows} rows processed", end="")
+    print("\n\rDONE")
 
 
 if __name__ == '__main__':
