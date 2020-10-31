@@ -5,6 +5,8 @@ import getopt
 import os
 import sys
 import math
+import pathlib
+
 
 def main(argv):
     input_file = ''
@@ -35,6 +37,11 @@ def main(argv):
     if (split_pattern == '') & (batch_size == ''):
         print("please specify split pattern or batch size")
         print_help(2)
+
+    file = pathlib.Path(input_file)
+    if not file.exists():
+        print("input file does not exist")
+        sys.exit(1)
 
     if split_pattern != '':
         sp = list(map(int, split_pattern.split(',')))
