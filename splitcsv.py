@@ -9,9 +9,10 @@ import sys
 def main(argv):
     input_file = ''
     output_dir = 'output'
+    split_pattern = ''
 
     try:
-        opts, args = getopt.getopt(argv, "hi:o:", ["inputFile=", "outputDir="])
+        opts, args = getopt.getopt(argv, "hi:o:p:", ["inputFile=", "outputDir=", "splitPattern="])
     except getopt.GetoptError:
         print_help(2)
     for opt, arg in opts:
@@ -21,14 +22,23 @@ def main(argv):
             input_file = arg
         elif opt in ("-o", "--outputDir"):
             output_dir = arg
+        elif opt in ("-p", "--splitPattern"):
+            split_pattern = arg
 
     if input_file == '':
+        print("please specify input file")
         print_help(2)
-    split(input_file, output_dir)
+
+    if split_pattern == '':
+        print("please specify split pattern")
+        print_help(2)
+
+    sp = list(map(int, split_pattern.split(',')))
+    split(input_file, output_dir, sp)
 
 
 def print_help(exit_code=0):
-    print('splitcsv.py -i <inputFile> -o <outputDir> (default: output/)')
+    print('splitcsv.py -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern>')
     sys.exit(exit_code)
 
 
@@ -41,9 +51,10 @@ def data_file(i, target_dir):
     return f'{target_dir}/data_{i + 1}.csv'
 
 
-def split(filepath, target_dir):
-    column_set = [2, 2, 2]
+def split(filepath, target_dir, column_set):
     os.makedirs(os.path.dirname(target_dir + '/'), exist_ok=True)
+
+    print(f"writing to directory: {target_dir}")
 
     for fIndex in range(len(column_set)):
         remove(data_file(fIndex, target_dir))
