@@ -65,8 +65,10 @@ def remove(filename):
         os.remove(filename)
 
 
-def data_file(i, target_dir):
-    return f'{target_dir}/data_{i + 1}.csv'
+def data_file(i, target_dir, input_file):
+    f_name_with_extension = os.path.basename(input_file)
+    segments = list(filter(lambda x: x != '', f_name_with_extension.split(".csv")))
+    return f'{target_dir}/{segments[0]}_{i + 1}.csv'
 
 
 def get_column_length(filepath):
@@ -81,7 +83,7 @@ def split(filepath, target_dir, column_set):
     print(f"writing to directory: {target_dir}")
 
     for fIndex in range(len(column_set)):
-        remove(data_file(fIndex, target_dir))
+        remove(data_file(fIndex, target_dir, filepath))
 
     with open(filepath, 'r') as mainFile:
         reader = csv.reader(mainFile, delimiter=',')
@@ -89,7 +91,7 @@ def split(filepath, target_dir, column_set):
         for row in reader:
             read_columns = 0
             for i in range(len(column_set)):
-                f = open(data_file(i, target_dir), 'a')
+                f = open(data_file(i, target_dir, filepath), 'a')
                 w = csv.writer(f, delimiter=',')
                 w.writerow(row[read_columns:read_columns + column_set[i]])
                 read_columns += column_set[i]

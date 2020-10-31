@@ -23,7 +23,9 @@ splitcsv -i ~/Downloads/large-file.csv -p 10,5,12
 ```
 
 By default, all the output files will be stored in a new directory called 
-`output`. Files will be named `data_1`, `data_2`, ...
+`output`. Generated file names will have index number appended. For example,
+`large-file_1.csv`, `large-file_2.csv`, ...
+
 If you want to change the output directory, you can use `-o` option as shown below.
 
  
