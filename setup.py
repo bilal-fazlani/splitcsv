@@ -1,11 +1,12 @@
 import setuptools
+import os
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
     name="splitcsv",
-    version="0.0.3",
+    version=os.environ['VERSION'],
     author="Bilal Fazlani",
     author_email="bilal.m.fazlani@gmail.com",
     description="A cli tool to split csv files",
