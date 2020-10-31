@@ -14,9 +14,7 @@ Not supported yet
 
 The below command will take large-file.csv and split it vertically into 3 files.
 First file will have 10 columns, 2nd file will have 5, and the 3rd will have 12.
-If there are more columns in the original file, they will be ignored. 
-
-If there are fewer columns in the original file, they will be skipped too.   
+If there are more columns in the original file, they will be ignored.   
 
 ```bash
 splitcsv -i ~/Downloads/large-file.csv -p 10,5,12
