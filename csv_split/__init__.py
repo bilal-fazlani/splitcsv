@@ -5,6 +5,7 @@ import math
 import pathlib
 from csv_split.splitter import split
 from horology import timed
+from importlib.metadata import version
 
 
 @timed
@@ -62,7 +63,11 @@ def run():
 
 
 def print_help(exit_code=0):
-    print('csv-split -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
+    print(f'[csv-split] version: {version("csv-split")}\n'
+          ':: split csv files by columns ::\n'
+          '\n'
+          'USAGE:\n'
+          'csv-split -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
           'OR\n'
           'csv-split -i <inputFile> -o <outputDir> (default: output/) -b <batchSize>')
     sys.exit(exit_code)
