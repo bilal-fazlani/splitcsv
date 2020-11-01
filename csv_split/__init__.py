@@ -3,7 +3,7 @@ import getopt
 import sys
 import math
 import pathlib
-from csv_split.splitter import split
+from .splitter import split
 from horology import timed
 from importlib.metadata import version
 
