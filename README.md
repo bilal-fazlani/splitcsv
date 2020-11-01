@@ -20,6 +20,12 @@ If there are more columns in the original file, they will be ignored.
 csv-split -i ~/Downloads/large-file.csv -p 10,5,12
 ```
 
+Instead of split-pattern, you can also specify batch size.
+
+```bash
+csv-split -i ~/Downloads/large-file.csv -b 7
+```
+
 By default, all the output files will be stored in a new directory called 
 `output`. Generated file names will have index number appended. For example,
 `large-file_1.csv`, `large-file_2.csv`, ...
@@ -28,16 +34,10 @@ If you want to change the output directory, you can use `-o` option as shown bel
 
  
 ```bash
-csv-split -i ~/Downloads/large-file.csv -p 10,5,12 -o ~/Downloads/splitted-data/
+csv-split -i ~/Downloads/large-file.csv -b 10 -o ~/Downloads/splitted-data/
 ```
 
 If this directory does not exist, it will be created.
-
-Instead of split-pattern, you can also specify batch size.
-
-```bash
-csv-split -i ~/Downloads/large-file.csv -b 7
-```
 
 This will create csv files and each csv file will contain 7 columns. Number of output files will
 depend on number of columns in input files.
