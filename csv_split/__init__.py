@@ -62,9 +62,9 @@ def main():
 
 
 def print_help(exit_code=0):
-    print('splitcsv -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
+    print('csv-split -i <inputFile> -o <outputDir> (default: output/) -p <splitPattern> (comma separated)\n'
           'OR\n'
-          'splitcsv -i <inputFile> -o <outputDir> (default: output/) -b <batchSize>')
+          'csv-split -i <inputFile> -o <outputDir> (default: output/) -b <batchSize>')
     sys.exit(exit_code)
 
 

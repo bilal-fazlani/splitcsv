@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="splitcsv",
+    name="csv-split",
     version=os.environ['VERSION'],
     author="Bilal Fazlani",
     author_email="bilal.m.fazlani@gmail.com",
@@ -14,7 +14,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/bilal-fazlani/splitcsv",
     packages=setuptools.find_packages(),
-    scripts=['splitcsv/bin/splitcsv'],
+    scripts=['csv_split/bin/csv-split'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

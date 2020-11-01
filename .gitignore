@@ -4,4 +4,4 @@ output
 .DS_Store
 build
 dist
-splitcsv.egg-info
+*.egg-info
