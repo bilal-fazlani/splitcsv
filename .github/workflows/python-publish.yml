@@ -19,9 +19,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.7'
+    - name: Get version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: test script
       env:
-        VERSION: ${{ github.event.release.tag_name }}
+        VERSION: ${{ steps.get_version.outputs.result }}
       run: |
         echo "hello world"
         echo "detected tag: $VERSION"
