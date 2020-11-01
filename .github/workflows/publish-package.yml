@@ -1,7 +1,7 @@
 # This workflows will upload a Python Package using Twine when a release is created
 # For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
 
-name: Upload Python Package
+name: Publish Package
 
 on:
   push:
@@ -22,21 +22,15 @@ jobs:
     - name: Get version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
-    - name: test script
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine
+    - name: Build and publish
       env:
+        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         VERSION: ${{ steps.get_version.outputs.VERSION }}
       run: |
-        echo "hello world"
-        echo "detected tag: $VERSION"
-#    - name: Install dependencies
-#      run: |
-#        python -m pip install --upgrade pip
-#        pip install setuptools wheel twine
-#    - name: Build and publish
-#      env:
-#        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-#        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-#        VERSION: ${{ github.event.inputs.version }}
-#      run: |
-#        python setup.py sdist bdist_wheel
-#        twine upload dist/*
+        python setup.py sdist bdist_wheel
+        twine upload dist/*
