@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="csv-split",
-    version=os.environ['VERSION'],
+    version=os.getenv('VERSION', default='0.0.0'),
     author="Bilal Fazlani",
     author_email="bilal.m.fazlani@gmail.com",
     description="A cli tool to split csv files",

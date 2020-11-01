@@ -1,14 +1,14 @@
-#!/usr/bin/python3
-
 import csv
 import getopt
 import sys
 import math
 import pathlib
-from csv_split.Splitter import split
+from csv_split.splitter import split
+from horology import timed
 
 
-def main():
+@timed
+def run():
     argv = sys.argv[1:]
     input_file = ''
     output_dir = 'output'
@@ -72,7 +72,3 @@ def get_column_length(filepath):
     with open(filepath, 'r') as mainFile:
         reader = csv.reader(mainFile, delimiter=',')
         return len(next(reader))
-
-
-if __name__ == '__main__':
-    main()
