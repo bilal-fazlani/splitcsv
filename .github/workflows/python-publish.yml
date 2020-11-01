@@ -24,7 +24,7 @@ jobs:
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
     - name: test script
       env:
-        VERSION: ${{ steps.get_version.outputs.result }}
+        VERSION: ${{ steps.get_version.outputs.VERSION }}
       run: |
         echo "hello world"
         echo "detected tag: $VERSION"
