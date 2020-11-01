@@ -1,4 +1,4 @@
-# SplitCSV
+# CSV-Split
 
 ## Vertical splitting (columns)
 Splits a given CSV file vertically.
