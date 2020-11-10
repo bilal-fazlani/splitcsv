@@ -1,4 +1,9 @@
 # CSV-Split
+_https://pypi.org/project/csv-split/_
+
+```bash
+pip install csv-split
+```
 
 ## Vertical splitting (columns)
 Splits a given CSV file vertically.
